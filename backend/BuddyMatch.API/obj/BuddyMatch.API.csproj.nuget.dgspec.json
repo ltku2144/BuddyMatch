@@ -1,0 +1,157 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj": {}
+  },
+  "projects": {
+    "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
+        "projectName": "BuddyMatch.API",
+        "projectPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
+        "packagesPath": "/Users/liattamam/.nuget/packages/",
+        "outputPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/liattamam/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
+                "projectPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+        "projectName": "BuddyMatch.Model",
+        "projectPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+        "packagesPath": "/Users/liattamam/.nuget/packages/",
+        "outputPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/liattamam/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

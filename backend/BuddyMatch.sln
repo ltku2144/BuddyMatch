@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuddyMatch.API", "BuddyMatch.API\BuddyMatch.API.csproj", "{6C0996AE-77F2-4EE7-8734-D647FA73E061}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuddyMatch.Model", "BuddyMatch.Model\BuddyMatch.Model.csproj", "{5A924BE0-168C-4CD3-B31F-130B69EFCF8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C0996AE-77F2-4EE7-8734-D647FA73E061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0996AE-77F2-4EE7-8734-D647FA73E061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0996AE-77F2-4EE7-8734-D647FA73E061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0996AE-77F2-4EE7-8734-D647FA73E061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A924BE0-168C-4CD3-B31F-130B69EFCF8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A924BE0-168C-4CD3-B31F-130B69EFCF8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A924BE0-168C-4CD3-B31F-130B69EFCF8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A924BE0-168C-4CD3-B31F-130B69EFCF8D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

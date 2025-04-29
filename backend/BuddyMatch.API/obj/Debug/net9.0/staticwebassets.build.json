@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "H7wgXvvJrH0A3XWcyV6o5015SFSVCmNZGiykQ49K3go=",
+  "Source": "BuddyMatch.API",
+  "BasePath": "_content/BuddyMatch.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
