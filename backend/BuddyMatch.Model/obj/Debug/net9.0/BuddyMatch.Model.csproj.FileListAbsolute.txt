@@ -1,0 +1,13 @@
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.GeneratedMSBuildEditorConfig.editorconfig
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.AssemblyInfoInputs.cache
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.AssemblyInfo.cs
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.csproj.CoreCompileInputs.cache
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.sourcelink.json
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/bin/Debug/net9.0/BuddyMatch.Model.deps.json
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/bin/Debug/net9.0/BuddyMatch.Model.dll
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/bin/Debug/net9.0/BuddyMatch.Model.pdb
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.csproj.AssemblyReference.cache
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.dll
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/refint/BuddyMatch.Model.dll
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/BuddyMatch.Model.pdb
+/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/Debug/net9.0/ref/BuddyMatch.Model.dll

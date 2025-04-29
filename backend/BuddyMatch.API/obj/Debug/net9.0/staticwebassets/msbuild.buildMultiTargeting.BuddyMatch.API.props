@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/BuddyMatch.API.props" />
+</Project>
