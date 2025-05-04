@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto:wght@400;500&display=swap');
+
+body {
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: #23262b;
+  color: #f5f6fa;
+  margin: 0;
+}
+
+.navbar {
+  background: #23262b !important;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 0 32px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  margin: 0;
+}
+
+.navbar .navbar-brand {
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  margin-right: 48px;
+  padding: 0;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar .nav-link {
+  color: #e0e0e0 !important;
+  text-transform: uppercase;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  background: none;
+  border-radius: 0;
+  padding: 0 0 0 0;
+  margin: 0;
+  transition: color 0.2s, border-bottom 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar .nav-link:hover, .navbar .nav-link.active {
+  color: #fff !important;
+  border-bottom: 2px solid #fff;
+  background: none;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #35373c;
+  margin: 0;
+}
+
+body, .app-root, .container, section, .card, .card-body, input, textarea, select {
+  background: #23262b !important;
+  color: #f5f6fa !important;
+}
+
+hr, .form-text, label, .form-label, .card-title, .card-text, .lead, .fw-bold, .display-4, .display-5, .btn-link, a, .link-primary, .btn-outline-secondary {
+  color: #f5f6fa !important;
+}
+
+.btn-primary, .btn-success, .btn-warning {
+  background: #35373c !important;
+  color: #f5f6fa !important;
+  border: none;
+}
+
+.btn-primary:hover, .btn-success:hover, .btn-warning:hover {
+  background: #44474d !important;
+  color: #fff !important;
+}
+
+input, textarea, select {
+  border: 1px solid #35373c !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #fff !important;
+}
+
+.card, .card-body {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+::-webkit-input-placeholder { color: #b0b3b8; }
+::-moz-placeholder { color: #b0b3b8; }
+:-ms-input-placeholder { color: #b0b3b8; }
+::placeholder { color: #b0b3b8; }
+
+@media (max-width: 900px) {
+  .navbar-nav {
+    gap: 18px;
+  }
+  .navbar {
+    padding-left: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 0 0 8px;
+    min-height: 48px;
+  }
+  .navbar .navbar-brand {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+  .navbar-nav {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+  .navbar .nav-link {
+    padding: 8px 0;
+    width: 100%;
+    border-bottom: 1px solid #35373c;
+  }
+}

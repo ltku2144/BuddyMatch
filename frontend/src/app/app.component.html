@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow rounded mb-4 px-3 py-2">
+  <a class="navbar-brand d-flex align-items-center gap-2" routerLink="">
+    <img src="assets/logo.png" alt="Study Buddies Logo" width="48" height="48" class="rounded-circle border border-light">
+    <span class="fw-bold fs-4">Study Buddies</span>
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto gap-2">
+      <li class="nav-item">
+        <a class="nav-link px-3" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="bi bi-house-door"></i> Home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link px-3" routerLink="/login" routerLinkActive="active">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link px-3" routerLink="/register" routerLinkActive="active">
+          <i class="bi bi-person-plus"></i> Register
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link px-3" routerLink="/profile" routerLinkActive="active">
+          <i class="bi bi-person-circle"></i> Profile
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link px-3" routerLink="/messages" routerLinkActive="active">
+          <i class="bi bi-chat-dots"></i> Messages
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link px-3" routerLink="/search" routerLinkActive="active">
+          <i class="bi bi-search"></i> Search
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<hr />
+<router-outlet></router-outlet>
