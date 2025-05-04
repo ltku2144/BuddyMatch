@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile.component';
 import { RegisterComponent } from './register.component';
 import { MessagesComponent } from './messages.component';
 import { SearchComponent } from './search.component';
+import { AdminComponent } from './admin.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'messages', component: MessagesComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'admin', component: AdminComponent },
 ];
 
 @NgModule({
