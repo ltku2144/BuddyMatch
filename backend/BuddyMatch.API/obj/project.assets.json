@@ -794,19 +794,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/liattamam/.nuget/packages/": {}
+    "/Users/alejandrotoro/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
+      "projectUniqueName": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
       "projectName": "BuddyMatch.API",
-      "projectPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
-      "packagesPath": "/Users/liattamam/.nuget/packages/",
-      "outputPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.API/obj/",
+      "projectPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
+      "packagesPath": "/Users/alejandrotoro/.nuget/packages/",
+      "outputPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/liattamam/.nuget/NuGet/NuGet.Config"
+        "/Users/alejandrotoro/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -818,8 +818,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
-              "projectPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj"
+            "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
+              "projectPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj"
             }
           }
         }
@@ -834,7 +834,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -868,7 +868,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {}
+    "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {}
   },
   "projects": {
-    "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
+    "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+        "projectUniqueName": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
         "projectName": "BuddyMatch.Model",
-        "projectPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
-        "packagesPath": "/Users/liattamam/.nuget/packages/",
-        "outputPath": "/Users/liattamam/Documents/BuddyMatch/backend/BuddyMatch.Model/obj/",
+        "projectPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+        "packagesPath": "/Users/alejandrotoro/.nuget/packages/",
+        "outputPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/liattamam/.nuget/NuGet/NuGet.Config"
+          "/Users/alejandrotoro/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -73,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
