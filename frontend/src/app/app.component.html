@@ -43,6 +43,11 @@
           <i class="bi bi-shield-lock"></i> Admin
         </a>
       </li>
+      <li class="nav-item" *ngIf="showTestModule">
+        <a class="nav-link px-3" routerLink="/test-module" routerLinkActive="active">
+          <i class="bi bi-bug"></i> Test Module
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

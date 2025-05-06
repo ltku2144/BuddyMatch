@@ -8,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'study-buddies';
+  showTestModule = true;
+
+
+  toggleTestModule() {
+    this.showTestModule = !this.showTestModule;
+  }
+  
 }

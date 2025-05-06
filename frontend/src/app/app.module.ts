@@ -9,10 +9,12 @@ import { ProfileComponent } from './profile.component';
 import { RegisterComponent } from './register.component';
 import { MessagesComponent } from './messages.component';
 import { SearchComponent } from './search.component';
+import { TestModuleComponent } from './test-module/test-module.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestModuleComponent
   ],
   imports: [
     BrowserModule,
