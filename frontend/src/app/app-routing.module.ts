@@ -7,7 +7,6 @@ import { RegisterComponent } from './register.component';
 import { MessagesComponent } from './messages.component';
 import { SearchComponent } from './search.component';
 import { AdminComponent } from './admin.component';
-import { TestModuleComponent } from './test-module/test-module.component'; // <-- Add this import
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,11 +16,11 @@ const routes: Routes = [
   { path: 'messages', component: MessagesComponent },
   { path: 'search', component: SearchComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'test-module', component: TestModuleComponent }, // <-- Add this route
+  { path: 'test-module', loadComponent: () => import('./test-module/test-module.component').then(m => m.TestModuleComponent) }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

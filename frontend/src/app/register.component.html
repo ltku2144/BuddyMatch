@@ -1,0 +1,90 @@
+<section class="container py-5" style="max-width: 520px;">
+  <div class="card shadow border-0">
+    <div class="card-body p-4">
+      <h2 class="mb-4 text-center fw-bold">Create Your Study Buddies Account</h2>
+
+      <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" autocomplete="on" novalidate>
+        <!-- Name -->
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" name="name" required minlength="2"
+                 [(ngModel)]="user.name" #name="ngModel">
+          <div class="text-danger" *ngIf="name.invalid && name.touched">
+            Name is required (min 2 characters).
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-control" name="email" required
+                 [(ngModel)]="user.email" #email="ngModel">
+          <div class="text-danger" *ngIf="email.invalid && email.touched">
+            Enter a valid email.
+          </div>
+        </div>
+
+        <!-- Program -->
+        <div class="mb-3">
+          <label class="form-label">Program</label>
+          <input type="text" class="form-control" name="program" required
+                 [(ngModel)]="user.program" #program="ngModel">
+          <div class="text-danger" *ngIf="program.invalid && program.touched">
+            Program is required.
+          </div>
+        </div>
+
+        <!-- Interests -->
+        <div class="mb-3">
+          <label class="form-label">Interests</label>
+          <input type="text" class="form-control" name="interests" required
+                 [(ngModel)]="user.interests" #interests="ngModel">
+          <div class="form-text">Separate multiple interests with commas.</div>
+          <div class="text-danger" *ngIf="interests.invalid && interests.touched">
+            Interests are required.
+          </div>
+        </div>
+
+        <!-- Availability -->
+        <div class="mb-3">
+          <label class="form-label">Availability</label>
+          <input type="text" class="form-control" name="availability" required
+                 [(ngModel)]="user.availability" #availability="ngModel">
+          <div class="text-danger" *ngIf="availability.invalid && availability.touched">
+            Availability is required.
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" required minlength="6"
+                 [(ngModel)]="user.password" #password="ngModel">
+          <div class="text-danger" *ngIf="password.invalid && password.touched">
+            Password is required (min 6 characters).
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-3">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" name="confirmPassword" required
+                 [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel">
+          <div class="text-danger" *ngIf="confirmPassword.invalid && confirmPassword.touched">
+            Please confirm your password.
+          </div>
+          <div class="text-danger" *ngIf="user.password && user.confirmPassword && user.password !== user.confirmPassword && confirmPassword.touched">
+            Passwords do not match.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 mb-2"
+                [disabled]="registerForm.invalid || (user.password !== user.confirmPassword)">
+          Register
+        </button>
+
+        <a routerLink="/login" class="btn btn-outline-secondary w-100">Already have an account? Log In</a>
+      </form>
+    </div>
+  </div>
+</section>

@@ -9,12 +9,11 @@ import { ProfileComponent } from './profile.component';
 import { RegisterComponent } from './register.component';
 import { MessagesComponent } from './messages.component';
 import { SearchComponent } from './search.component';
-import { TestModuleComponent } from './test-module/test-module.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TestModuleComponent
+    AppComponent
+    // 🚫 REMOVE TestModuleComponent from here
   ],
   imports: [
     BrowserModule,
@@ -22,7 +21,6 @@ import { TestModuleComponent } from './test-module/test-module.component';
     HomeComponent,
     LoginComponent,
     ProfileComponent,
-    RegisterComponent,
     MessagesComponent,
     SearchComponent
   ],

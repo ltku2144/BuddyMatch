@@ -1,3 +1,14 @@
-<div class="alert alert-info mt-4">
+<section class="container py-4">
+  <h2 class="mb-3">📋 Test: All Users from PostgreSQL</h2>
+
+  <div class="alert alert-info mt-4">
     {{ message }}
-</div>
+  </div>
+
+  <ul class="list-group mt-3" *ngIf="users.length > 0">
+    <li *ngFor="let user of users" class="list-group-item">
+      <strong>{{ user.name }}</strong> — {{ user.program }}<br />
+      <small>{{ user.email }}</small>
+    </li>
+  </ul>
+</section>
