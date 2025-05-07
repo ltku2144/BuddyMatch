@@ -1,2 +1,13 @@
+# Node / Angular
 node_modules/
+dist/
+.angular/
+
+# .NET
+bin/
+obj/
+*.user
+*.db
+
+# OS files
 .DS_Store

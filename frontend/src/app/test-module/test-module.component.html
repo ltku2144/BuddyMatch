@@ -7,8 +7,56 @@
 
   <ul class="list-group mt-3" *ngIf="users.length > 0">
     <li *ngFor="let user of users" class="list-group-item">
-      <strong>{{ user.name }}</strong> — {{ user.program }}<br />
-      <small>{{ user.email }}</small>
+      <div *ngIf="!user.editing">
+        <strong>{{ user.name }}</strong> — {{ user.program }}<br />
+        <small>{{ user.email }}</small><br />
+        <button class="btn btn-sm btn-primary mt-2 me-2" (click)="toggleEdit(user)">Edit</button>
+        <button class="btn btn-sm btn-danger mt-2" (click)="delete(user)">Delete</button>
+      </div>
+
+      <div *ngIf="user.editing">
+        <input [(ngModel)]="user.name" class="form-control mb-1" placeholder="Name" />
+        <input [(ngModel)]="user.program" class="form-control mb-1" placeholder="Program" />
+        <input [(ngModel)]="user.email" class="form-control mb-1" placeholder="Email" />
+        <input [(ngModel)]="user.interests" class="form-control mb-1" placeholder="Interests" />
+        <input [(ngModel)]="user.availability" class="form-control mb-1" placeholder="Availability" />
+
+        <button class="btn btn-sm btn-success me-2" (click)="save(user)">Save</button>
+        <button class="btn btn-sm btn-secondary" (click)="toggleEdit(user)">Cancel</button>
+      </div>
     </li>
   </ul>
+
+  <section class="mt-5">
+    <h4>Add New User</h4>
+
+    <div class="card card-body bg-light">
+      <div class="form-group mb-2">
+        <label><strong>Name:</strong> <small>(e.g., "Emma Larsen")</small></label>
+        <input [(ngModel)]="newUser.name" class="form-control" placeholder="Full name" />
+      </div>
+
+      <div class="form-group mb-2">
+        <label><strong>Email:</strong> <small>(e.g., "emma&#64;cbs.dk")</small></label>
+        <input [(ngModel)]="newUser.email" class="form-control" placeholder="Email address" />
+      </div>
+
+      <div class="form-group mb-2">
+        <label><strong>Program:</strong> <small>(e.g., "MSc Business Analytics")</small></label>
+        <input [(ngModel)]="newUser.program" class="form-control" placeholder="Academic program" />
+      </div>
+
+      <div class="form-group mb-2">
+        <label><strong>Interests:</strong> <small>(e.g., "Data Science, Football")</small></label>
+        <input [(ngModel)]="newUser.interests" class="form-control" placeholder="Comma-separated interests" />
+      </div>
+
+      <div class="form-group mb-3">
+        <label><strong>Availability:</strong> <small>(e.g., "Mon-Wed 14:00–17:00")</small></label>
+        <input [(ngModel)]="newUser.availability" class="form-control" placeholder="Your available hours" />
+      </div>
+
+      <button class="btn btn-success" (click)="create()">➕ Create User</button>
+    </div>
+  </section>
 </section>

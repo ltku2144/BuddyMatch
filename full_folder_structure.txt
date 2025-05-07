@@ -1,0 +1,18 @@
+MyProject
+MyProject
+  tests
+    test_main.js
+  docs
+    intro.txt
+  README.md
+  assets
+    images
+      logo.png
+    fonts
+      Roboto.ttf
+  src
+    utils
+      helpers.js
+    main.js
+    components
+      button.js

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {}
+    "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {}
   },
   "projects": {
-    "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
+    "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+        "projectUniqueName": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
         "projectName": "BuddyMatch.Model",
-        "projectPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
-        "packagesPath": "/Users/alejandrotoro/.nuget/packages/",
-        "outputPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/obj/",
+        "projectPath": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+        "packagesPath": "/Users/petergodtfredsen/.nuget/packages/",
+        "outputPath": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/alejandrotoro/.nuget/NuGet/NuGet.Config"
+          "/Users/petergodtfredsen/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -54,7 +54,7 @@
             },
             "Npgsql": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[9.0.0, )"
             }
           },
           "imports": [

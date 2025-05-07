@@ -20,32 +20,26 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Create new user
   create(user: Omit<User, 'id' | 'createdAt'>): Observable<void> {
     return this.http.post<void>(this.apiUrl, user);
   }
 
-  // ✅ Get all users
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
 
-  // ✅ Get one user by ID
   getById(id: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
-  // ✅ Find matching users
   getMatches(id: number): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/match/${id}`);
   }
 
-  // ✅ Update user
   update(id: number, user: Partial<User>): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}`, user);
   }
 
-  // ✅ Delete user
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
