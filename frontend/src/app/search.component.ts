@@ -1,14 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface User {
-  name: string;
-  email: string;
-  program: string;
-  interests: string;
-  availability: string;
-}
+import { UserService, User } from './user.service'; // Import User from UserService
 
 @Component({
   selector: 'app-search',
@@ -50,47 +43,33 @@ interface User {
     </section>
   `
 })
-export class SearchComponent {
-  // Mock user data. Replace this with a call to your SQL database.
-  users: User[] = [
-    {
-      name: 'Anna Jensen',
-      email: 'anna.j@cbs.dk',
-      program: 'International Business',
-      interests: 'Marketing, Case Studies',
-      availability: 'Mon-Wed 10:00–13:00'
-    },
-    {
-      name: 'Ben Smith',
-      email: 'ben.s@cbs.dk',
-      program: 'Finance',
-      interests: 'Investing, Case Studies',
-      availability: 'Tue-Thu 14:00–16:00'
-    },
-    {
-      name: 'Carla Gomez',
-      email: 'carla.g@cbs.dk',
-      program: 'International Business',
-      interests: 'Marketing, Networking',
-      availability: 'Mon-Wed 10:00–13:00'
-    }
-    // Add more mock users as needed
-  ];
-
+export class SearchComponent implements OnInit {
+  users: User[] = [];
   searchCriteria: Partial<User> = {
     program: '',
     interests: '',
     availability: ''
   };
-
   matches: User[] = [];
   searched = false;
 
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    // Fetch all users from the API on component initialization
+    this.userService.getAll().subscribe({
+      next: (data: User[]) => {
+        this.users = data;
+      },
+      error: (err) => {
+        console.error('Failed to fetch users:', err);
+      }
+    });
+  }
+
   findMatches() {
-    // Always clear previous results
     this.matches = [];
 
-    // Only search if at least one field is filled
     const hasInput =
       (this.searchCriteria.program && this.searchCriteria.program.trim() !== '') ||
       (this.searchCriteria.interests && this.searchCriteria.interests.trim() !== '') ||
@@ -112,7 +91,6 @@ export class SearchComponent {
         this.searchCriteria.availability &&
         user.availability.toLowerCase().includes(this.searchCriteria.availability!.toLowerCase());
 
-      // Match if at least one input is filled and matches
       return (
         (this.searchCriteria.program && matchesProgram) ||
         (this.searchCriteria.interests && matchesInterests) ||

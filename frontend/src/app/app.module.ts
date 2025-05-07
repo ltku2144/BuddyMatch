@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { UserService, User } from './user.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home.component';
-import { LoginComponent } from './login.component';
-import { ProfileComponent } from './profile.component';
-import { RegisterComponent } from './register.component';
-import { MessagesComponent } from './messages.component';
-import { SearchComponent } from './search.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,15 +14,15 @@ import { SearchComponent } from './search.component';
   ],
   imports: [
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
-    HomeComponent,
-    LoginComponent,
-    ProfileComponent,
-    MessagesComponent,
-    SearchComponent,
-    RegisterComponent,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

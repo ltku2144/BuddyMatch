@@ -13,36 +13,49 @@
           <i class="bi bi-house-door"></i> Home
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link px-3" routerLink="/login" routerLinkActive="active">
-          <i class="bi bi-box-arrow-in-right"></i> Login
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link px-3" routerLink="/register" routerLinkActive="active">
-          <i class="bi bi-person-plus"></i> Register
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link px-3" routerLink="/profile" routerLinkActive="active">
-          <i class="bi bi-person-circle"></i> Profile
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link px-3" routerLink="/messages" routerLinkActive="active">
-          <i class="bi bi-chat-dots"></i> Messages
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link px-3" routerLink="/search" routerLinkActive="active">
-          <i class="bi bi-search"></i> Match
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="showTestModule">
-        <a class="nav-link px-3" routerLink="/test-module" routerLinkActive="active">
-          <i class="bi bi-shield-lock"></i> Admin
-        </a>
-      </li>
+      
+      <!-- Show these items only when NOT logged in -->
+      <ng-container *ngIf="!authService.isAuthenticated()">
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/login" routerLinkActive="active">
+            <i class="bi bi-box-arrow-in-right"></i> Login
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/register" routerLinkActive="active">
+            <i class="bi bi-person-plus"></i> Register
+          </a>
+        </li>
+      </ng-container>
+      
+      <!-- Show these items only when logged in -->
+      <ng-container *ngIf="authService.isAuthenticated()">
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/profile" routerLinkActive="active">
+            <i class="bi bi-person-circle"></i> Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/messages" routerLinkActive="active">
+            <i class="bi bi-chat-dots"></i> Messages
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLink="/search" routerLinkActive="active">
+            <i class="bi bi-search"></i> Match
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="showTestModule">
+          <a class="nav-link px-3" routerLink="/test-module" routerLinkActive="active">
+            <i class="bi bi-shield-lock"></i> Admin
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3" href="#" (click)="logout($event)">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </nav>

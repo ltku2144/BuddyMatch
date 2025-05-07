@@ -24,6 +24,16 @@ export class UserService {
     return this.http.post<void>(this.apiUrl, user);
   }
 
+  // Fetch user profile by ID
+  getProfile(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/profile/${userId}`);
+  }
+
+  // Update user profile
+  updateProfile(userId: number, user: User): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/profile/${userId}`, user);
+  }
+
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }

@@ -126,29 +126,106 @@ namespace BuddyMatch.Model.Repositories
         }
 
         /// <summary>
-        /// Updates an existing user record.
+        /// Updates an existing user record in the database.
         /// </summary>
+        /// <param name="user">The user object containing updated information.</param>
+        /// <returns>True if the update was successful, otherwise false.</returns>
         public bool UpdateUser(User user)
+        {
+            try
+            {
+                using var conn = new NpgsqlConnection(ConnectionString);
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = @"
+                    UPDATE users
+                    SET name = @Name,
+                        email = @Email,
+                        program = @Program,
+                        interests = @Interests,
+                        availability = @Availability
+                    WHERE id = @Id";
+                cmd.Parameters.AddWithValue("@Name", user.Name);
+                cmd.Parameters.AddWithValue("@Email", user.Email);
+                cmd.Parameters.AddWithValue("@Program", user.Program ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@Interests", user.Interests ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@Availability", user.Availability ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@Id", user.Id);
+
+                Console.WriteLine($"Executing SQL: {cmd.CommandText}");
+                Console.WriteLine($"Parameters: Name={user.Name}, Email={user.Email}, Program={user.Program}, Interests={user.Interests}, Availability={user.Availability}, Id={user.Id}");
+
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in UpdateUser: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a user by their email address.
+        /// </summary>
+        /// <param name="email">The email address of the user.</param>
+        /// <returns>The user object if found, otherwise null.</returns>
+        public User GetByEmail(string email)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = @"
-                UPDATE users SET
-                    name = @name,
-                    email = @email,
-                    program = @program,
-                    interests = @interests,
-                    availability = @availability
-                WHERE id = @id";
+            cmd.CommandText = "SELECT * FROM users WHERE email = @Email";
+            cmd.Parameters.AddWithValue("@Email", email);
 
-            cmd.Parameters.AddWithValue("@id", user.Id);
-            cmd.Parameters.AddWithValue("@name", user.Name ?? string.Empty);
-            cmd.Parameters.AddWithValue("@email", user.Email ?? string.Empty);
-            cmd.Parameters.AddWithValue("@program", user.Program ?? string.Empty);
-            cmd.Parameters.AddWithValue("@interests", user.Interests ?? string.Empty);
-            cmd.Parameters.AddWithValue("@availability", user.Availability ?? string.Empty);
+            conn.Open();
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return new User
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("id")),
+                    Name = reader.GetString(reader.GetOrdinal("name")),
+                    Email = reader.GetString(reader.GetOrdinal("email")),
+                    Password = reader.GetString(reader.GetOrdinal("password")),
+                    Program = reader.GetString(reader.GetOrdinal("program")),
+                    Interests = reader.GetString(reader.GetOrdinal("interests")),
+                    Availability = reader.GetString(reader.GetOrdinal("availability")),
+                    CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at"))
+                };
+            }
 
-            return InsertData(conn, cmd);
+            return null;
+        }
+
+        /// <summary>
+        /// Retrieves a user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>The user object if found, otherwise null.</returns>
+        public User? GetUserById(int id)
+        {
+            using var conn = new NpgsqlConnection(ConnectionString);
+            var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM users WHERE id = @Id";
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            conn.Open();
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return new User
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("id")),
+                    Name = reader.GetString(reader.GetOrdinal("name")),
+                    Email = reader.GetString(reader.GetOrdinal("email")),
+                    Password = reader.GetString(reader.GetOrdinal("password")),
+                    Program = reader.GetString(reader.GetOrdinal("program")),
+                    Interests = reader.GetString(reader.GetOrdinal("interests")),
+                    Availability = reader.GetString(reader.GetOrdinal("availability")),
+                    CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at"))
+                };
+            }
+
+            return null;
         }
     }
 }
