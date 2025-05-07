@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "Cn72VvCnTWc=",
+  "dgSpecHash": "SwhoswF+Z+E=",
   "success": true,
-  "projectFilePath": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+  "projectFilePath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
   "expectedPackageFiles": [
-    "/Users/petergodtfredsen/.nuget/packages/microsoft.extensions.configuration/9.0.4/microsoft.extensions.configuration.9.0.4.nupkg.sha512",
-    "/Users/petergodtfredsen/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.4/microsoft.extensions.configuration.abstractions.9.0.4.nupkg.sha512",
-    "/Users/petergodtfredsen/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
-    "/Users/petergodtfredsen/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
-    "/Users/petergodtfredsen/.nuget/packages/microsoft.extensions.primitives/9.0.4/microsoft.extensions.primitives.9.0.4.nupkg.sha512",
-    "/Users/petergodtfredsen/.nuget/packages/npgsql/9.0.0/npgsql.9.0.0.nupkg.sha512",
-    "/Users/petergodtfredsen/.nuget/packages/system.text.json/9.0.0/system.text.json.9.0.0.nupkg.sha512"
+    "/Users/alejandrotoro/.nuget/packages/microsoft.extensions.configuration/9.0.4/microsoft.extensions.configuration.9.0.4.nupkg.sha512",
+    "/Users/alejandrotoro/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.4/microsoft.extensions.configuration.abstractions.9.0.4.nupkg.sha512",
+    "/Users/alejandrotoro/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/Users/alejandrotoro/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+    "/Users/alejandrotoro/.nuget/packages/microsoft.extensions.primitives/9.0.4/microsoft.extensions.primitives.9.0.4.nupkg.sha512",
+    "/Users/alejandrotoro/.nuget/packages/npgsql/9.0.0/npgsql.9.0.0.nupkg.sha512",
+    "/Users/alejandrotoro/.nuget/packages/system.text.json/9.0.0/system.text.json.9.0.0.nupkg.sha512"
   ],
   "logs": []
 }

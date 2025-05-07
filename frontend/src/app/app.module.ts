@@ -13,7 +13,6 @@ import { SearchComponent } from './search.component';
 @NgModule({
   declarations: [
     AppComponent
-    // 🚫 REMOVE TestModuleComponent from here
   ],
   imports: [
     BrowserModule,
@@ -22,7 +21,8 @@ import { SearchComponent } from './search.component';
     LoginComponent,
     ProfileComponent,
     MessagesComponent,
-    SearchComponent
+    SearchComponent,
+    RegisterComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

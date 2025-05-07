@@ -882,19 +882,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/petergodtfredsen/.nuget/packages/": {}
+    "/Users/alejandrotoro/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
+      "projectUniqueName": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
       "projectName": "BuddyMatch.API",
-      "projectPath": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
-      "packagesPath": "/Users/petergodtfredsen/.nuget/packages/",
-      "outputPath": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/obj/",
+      "projectPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
+      "packagesPath": "/Users/alejandrotoro/.nuget/packages/",
+      "outputPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/petergodtfredsen/.nuget/NuGet/NuGet.Config"
+        "/Users/alejandrotoro/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -906,8 +906,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
-              "projectPath": "/Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj"
+            "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj": {
+              "projectPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj"
             }
           }
         }

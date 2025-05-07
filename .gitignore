@@ -11,3 +11,10 @@ obj/
 
 # OS files
 .DS_Store
+*.json
+backend/BuddyMatch.API/appsettings.Development.json
+/backend/BuddyMatch.API
+backend/BuddyMatch.API/appsettings.json
+**/appsettings.Local.json
+backend/BuddyMatch.API/Properties/launchSettings.json
+.env
