@@ -69,7 +69,6 @@ import { Router } from '@angular/router';
             </div>
             <div class="mt-4 text-center">
               <button type="submit" class="btn btn-primary me-2">Save Changes</button>
-              <button type="button" class="btn btn-outline-secondary" (click)="logout()">Log Out</button>
             </div>
           </form>
         </div>
