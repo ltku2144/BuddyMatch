@@ -47,8 +47,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class MessagesComponent {
   messages = [
-    { sender: 'Alice', text: 'Hi there!' },
-    { sender: 'Bob', text: 'Hello! How are you?' }
+    { sender: 'Ana', text: 'Hi there!' },
+    { sender: 'Markus', text: 'Hello! How are you?' }
   ];
   newMessage: string = '';
 
