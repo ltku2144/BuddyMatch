@@ -9,7 +9,8 @@ namespace BuddyMatch.Model.Repositories
 
         public BaseRepository(IConfiguration configuration)
         {
-            ConnectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found.");
+            ConnectionString = configuration.GetConnectionString("AppProgDb") 
+                ?? throw new InvalidOperationException("Connection string 'AppProgDb' not found.");
         }
 
         protected NpgsqlDataReader GetData(NpgsqlConnection conn, NpgsqlCommand cmd)
