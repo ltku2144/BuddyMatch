@@ -4,25 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BuddyMatch.API.Controllers
 {
-    /// <summary>
-    /// User APIs for Study Buddy Matching Application
-    /// Handles user creation, retrieval, matching, update, and deletion.
-    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly UserRepository _repository;
 
-        // Dependency injection of the repository
         public UserController(UserRepository repository)
         {
             _repository = repository;
         }
 
-        /// <summary>
-        ///  GET: Fetch all users
-        /// </summary>
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAllUsers()
         {
@@ -30,22 +22,61 @@ namespace BuddyMatch.API.Controllers
             return Ok(users);
         }
 
-        /// <summary>
-        ///  POST: Add a new user to the system
-        /// </summary>
         [HttpPost]
-        public ActionResult CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] User user)
         {
-            if (user == null)
-                return BadRequest("Invalid user");
+            if (user == null || string.IsNullOrWhiteSpace(user.Password))
+                return BadRequest("Missing user data or password");
 
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             var success = _repository.InsertUser(user);
-            return success ? Ok() : BadRequest("Failed to create user");
+            return success ? Ok() : StatusCode(500, "User creation failed");
         }
 
-        /// <summary>
-        ///  GET: Match user with others sharing same program or interests
-        /// </summary>
+        [HttpPost("login")]
+        public ActionResult<object> Login([FromBody] LoginRequest request)
+        {
+            Console.WriteLine($"🔐 Login attempt: {request.Email}");
+
+            if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+            {
+                Console.WriteLine("⚠️ Missing email or password.");
+                return BadRequest("Email and password are required");
+            }
+
+            var user = _repository.GetByEmail(request.Email);
+
+            if (user == null)
+            {
+                Console.WriteLine("❌ No user found.");
+                return Unauthorized(new { message = "Invalid email or password" });
+            }
+
+            Console.WriteLine($"➡️ Stored hash: {user.Password}");
+            Console.WriteLine($"➡️ Entered password: {request.Password}");
+
+            var passwordMatch = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
+            Console.WriteLine($"✅ Hash match result: {passwordMatch}");
+
+            if (passwordMatch)
+            {
+                var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+
+                Console.WriteLine($"✅ Login success for: {user.Email}");
+                return Ok(new
+                {
+                    token,
+                    userId = user.Id,
+                    name = user.Name,
+                    email = user.Email,
+                    program = user.Program
+                });
+            }
+
+            Console.WriteLine("❌ Password hash mismatch.");
+            return Unauthorized(new { message = "Invalid email or password" });
+        }
+
         [HttpGet("match/{id}")]
         public ActionResult<IEnumerable<User>> GetMatches(int id)
         {
@@ -53,70 +84,28 @@ namespace BuddyMatch.API.Controllers
             return Ok(matches);
         }
 
-        /// <summary>
-        ///  DELETE: Remove user by ID
-        /// </summary>
-        [HttpDelete("{id}")]
-        public ActionResult DeleteUser(int id)
-        {
-            var success = _repository.DeleteUser(id);
-            return success ? Ok() : NotFound("User not found");
-        }
-
-        /// <summary>
-        ///  PUT: Update user by ID
-        /// </summary>
-        [HttpPut("{id}")]
-        public ActionResult UpdateUser(int id, [FromBody] User user)
-        {
-            if (id != user.Id)
-                return BadRequest("User ID mismatch");
-
-            var success = _repository.UpdateUser(user);
-            return success ? Ok() : BadRequest("Failed to update user");
-        }
-
-        [HttpPost("login")]
-        public ActionResult<object> Login([FromBody] LoginRequest request)
-        {
-            // Find the user by email (implement this method in your repository)
-            var user = _repository.GetByEmail(request.Email);
-
-            // Check if user exists and password is correct (in a real app, use proper password hashing)
-            if (user != null && user.Password == request.Password)
-            {
-                // Generate a simple token (in production, use a proper JWT library)
-                var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-
-                return Ok(new
-                {
-                    token = token,
-                    userId = user.Id
-                });
-            }
-
-            return Unauthorized("Invalid email or password");
-        }
-
         [HttpGet("profile/{id}")]
         public ActionResult<User> GetUserProfile(int id)
         {
             var user = _repository.GetUserById(id);
-            if (user == null)
-                return NotFound("User not found");
-
-            return Ok(user);
+            return user == null ? NotFound("User not found") : Ok(user);
         }
 
         [HttpPut("profile/{id}")]
-        public ActionResult UpdateUserProfile(int id, [FromBody] User user)
+        public IActionResult UpdateUserProfile(int id, [FromBody] User user)
         {
             if (id != user.Id)
                 return BadRequest("User ID mismatch");
 
             var success = _repository.UpdateUser(user);
-            return success ? Ok() : BadRequest("Failed to update user");
+            return success ? Ok() : StatusCode(500, "Failed to update user profile");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            var success = _repository.DeleteUser(id);
+            return success ? Ok() : NotFound("User not found");
         }
     }
 }
-

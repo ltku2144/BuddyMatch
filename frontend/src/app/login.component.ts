@@ -14,18 +14,18 @@ import { RouterModule } from '@angular/router';
       <div class="card shadow border-0">
         <div class="card-body p-4">
           <h2 class="mb-4 text-center fw-bold">Log In to Study Buddies</h2>
-          
+
           <form (ngSubmit)="onSubmit()" #loginForm="ngForm" autocomplete="on">
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" 
-                     [(ngModel)]="email" placeholder="Enter your email" 
+              <input type="email" class="form-control" id="email" name="email"
+                     [(ngModel)]="email" placeholder="Enter your email"
                      required autocomplete="email">
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password" 
-                     [(ngModel)]="password" placeholder="Enter your password" 
+              <input type="password" class="form-control" id="password" name="password"
+                     [(ngModel)]="password" placeholder="Enter your password"
                      required autocomplete="current-password">
             </div>
             <div class="mb-3 form-check">
@@ -62,9 +62,14 @@ export class LoginComponent {
     this.isLoading = true;
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        localStorage.setItem('userId', response.userId); // Save user ID
-        localStorage.setItem('token', response.token); // Save token
-        this.router.navigate(['/profile']); // Redirect to profile page
+        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('token', response.token);
+
+        // 🔐 Save credentials for BasicAuthInterceptor
+        localStorage.setItem('auth_email', this.email);
+        localStorage.setItem('auth_password', this.password);
+
+        this.router.navigate(['/profile']);
       },
       error: (err) => {
         console.error('Login failed:', err);
