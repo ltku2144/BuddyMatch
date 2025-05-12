@@ -4,6 +4,7 @@ using Npgsql;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BuddyMatch.Model.Repositories
 {
@@ -11,12 +12,18 @@ namespace BuddyMatch.Model.Repositories
     {
         public UserRepository(IConfiguration configuration) : base(configuration) { }
 
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            // This remains synchronous but wrapped in a Task for signature compatibility
+            return await Task.FromResult(GetAllUsers());
+        }
+
         public List<User> GetAllUsers()
         {
             var users = new List<User>();
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM users";
+            cmd.CommandText = "SELECT * FROM public.users";
             var reader = GetData(conn, cmd);
 
             while (reader.Read())
@@ -26,19 +33,25 @@ namespace BuddyMatch.Model.Repositories
             return users;
         }
 
+        public async Task<bool> CreateUserAsync(User user)
+        {
+            // This remains synchronous but wrapped in a Task for signature compatibility
+            return await Task.FromResult(InsertUser(user));
+        }
+
         public bool InsertUser(User user)
         {
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password ?? string.Empty);
+            // user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash ?? string.Empty); // REMOVED THIS LINE
 
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-                INSERT INTO users (name, email, password, program, interests, availability)
+                INSERT INTO public.users (name, email, password, program, interests, availability)
                 VALUES (@name, @email, @password, @program, @interests, @availability)";
 
             cmd.Parameters.AddWithValue("@name", NpgsqlDbType.Text, user.Name ?? string.Empty);
             cmd.Parameters.AddWithValue("@email", NpgsqlDbType.Text, user.Email ?? string.Empty);
-            cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, user.Password);
+            cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, user.PasswordHash);
             cmd.Parameters.AddWithValue("@program", NpgsqlDbType.Text, user.Program ?? string.Empty);
             cmd.Parameters.AddWithValue("@interests", NpgsqlDbType.Text, user.Interests ?? string.Empty);
             cmd.Parameters.AddWithValue("@availability", NpgsqlDbType.Text, user.Availability ?? string.Empty);
@@ -52,7 +65,7 @@ namespace BuddyMatch.Model.Repositories
 
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM users WHERE id = @id";
+            cmd.CommandText = "SELECT * FROM public.users WHERE id = @id";
             cmd.Parameters.AddWithValue("@id", userId);
             var reader = GetData(conn, cmd);
 
@@ -65,7 +78,7 @@ namespace BuddyMatch.Model.Repositories
             using var conn2 = new NpgsqlConnection(ConnectionString);
             var cmd2 = conn2.CreateCommand();
             cmd2.CommandText = @"
-                SELECT * FROM users
+                SELECT * FROM public.users
                 WHERE id != @id
                 AND (program = @program OR interests ILIKE '%' || @interests || '%')";
 
@@ -86,7 +99,7 @@ namespace BuddyMatch.Model.Repositories
         {
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "DELETE FROM users WHERE id = @id";
+            cmd.CommandText = "DELETE FROM public.users WHERE id = @id";
             cmd.Parameters.AddWithValue("@id", id);
 
             return InsertData(conn, cmd);
@@ -99,7 +112,7 @@ namespace BuddyMatch.Model.Repositories
                 using var conn = new NpgsqlConnection(ConnectionString);
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = @"
-                    UPDATE users
+                    UPDATE public.users
                     SET name = @Name,
                         email = @Email,
                         program = @Program,
@@ -124,11 +137,18 @@ namespace BuddyMatch.Model.Repositories
             }
         }
 
+        public async Task<User?> GetUserByUsernameAsync(string email) // Changed parameter name for clarity
+        {
+            // This remains synchronous but wrapped in a Task for signature compatibility
+            // Assuming username is the email for now
+            return await Task.FromResult(GetByEmail(email));
+        }
+
         public User? GetByEmail(string email)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM users WHERE email = @Email";
+            cmd.CommandText = "SELECT * FROM public.users WHERE email = @Email";
             cmd.Parameters.AddWithValue("@Email", email);
 
             conn.Open();
@@ -140,7 +160,7 @@ namespace BuddyMatch.Model.Repositories
         {
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM users WHERE id = @Id";
+            cmd.CommandText = "SELECT * FROM public.users WHERE id = @Id";
             cmd.Parameters.AddWithValue("@Id", id);
 
             conn.Open();
@@ -155,7 +175,7 @@ namespace BuddyMatch.Model.Repositories
                 Id = reader.GetInt32(reader.GetOrdinal("id")),
                 Name = reader.GetString(reader.GetOrdinal("name")),
                 Email = reader.GetString(reader.GetOrdinal("email")),
-                Password = reader.GetString(reader.GetOrdinal("password")),
+                PasswordHash = reader.GetString(reader.GetOrdinal("password")),
                 Program = reader.GetString(reader.GetOrdinal("program")),
                 Interests = reader.GetString(reader.GetOrdinal("interests")),
                 Availability = reader.GetString(reader.GetOrdinal("availability")),

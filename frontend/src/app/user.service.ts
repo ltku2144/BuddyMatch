@@ -21,7 +21,14 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   create(user: Omit<User, 'id' | 'createdAt'>): Observable<void> {
-    return this.http.post<void>(this.apiUrl, user);
+    // Map the frontend 'password' field to 'passwordHash' for the backend
+    const userForApi: any = { ...user };
+    if (userForApi.password) {
+      userForApi.passwordHash = userForApi.password;
+      delete userForApi.password; // Remove the original password field
+    }
+    // console.log('Sending to API for creation:', userForApi); // Optional: for debugging
+    return this.http.post<void>(this.apiUrl, userForApi);
   }
 
   // Fetch user profile by ID

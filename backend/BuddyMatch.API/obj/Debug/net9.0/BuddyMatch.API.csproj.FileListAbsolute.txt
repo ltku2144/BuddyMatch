@@ -128,3 +128,5 @@
 /Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/obj/Debug/net9.0/BuddyMatch.API.pdb
 /Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/obj/Debug/net9.0/BuddyMatch.API.genruntimeconfig.cache
 /Users/petergodtfredsen/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/obj/Debug/net9.0/ref/BuddyMatch.API.dll
+/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/bin/Debug/net9.0/BCrypt.Net-Next.dll
+/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/bin/Debug/net9.0/Dapper.dll

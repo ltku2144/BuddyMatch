@@ -25,10 +25,10 @@ namespace BuddyMatch.API.Controllers
         [HttpPost]
         public IActionResult CreateUser([FromBody] User user)
         {
-            if (user == null || string.IsNullOrWhiteSpace(user.Password))
+            if (user == null || string.IsNullOrWhiteSpace(user.PasswordHash))
                 return BadRequest("Missing user data or password");
 
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
             var success = _repository.InsertUser(user);
             return success ? Ok() : StatusCode(500, "User creation failed");
         }
@@ -36,11 +36,11 @@ namespace BuddyMatch.API.Controllers
         [HttpPost("login")]
         public ActionResult<object> Login([FromBody] LoginRequest request)
         {
-            Console.WriteLine($"🔐 Login attempt: {request.Email}");
+            // Add detailed logging
+            Console.WriteLine($"[LOGIN ATTEMPT] Received Email: [{request.Email}], Received Password: [{request.Password}]");
 
             if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
             {
-                Console.WriteLine("⚠️ Missing email or password.");
                 return BadRequest("Email and password are required");
             }
 
@@ -48,21 +48,20 @@ namespace BuddyMatch.API.Controllers
 
             if (user == null)
             {
-                Console.WriteLine("❌ No user found.");
+                Console.WriteLine($"[LOGIN ATTEMPT] User not found for email: [{request.Email}]");
                 return Unauthorized(new { message = "Invalid email or password" });
             }
 
-            Console.WriteLine($"➡️ Stored hash: {user.Password}");
-            Console.WriteLine($"➡️ Entered password: {request.Password}");
+            Console.WriteLine($"[LOGIN ATTEMPT] User found. DB Email: [{user.Email}], DB PasswordHash: [{user.PasswordHash}]");
 
-            var passwordMatch = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
-            Console.WriteLine($"✅ Hash match result: {passwordMatch}");
+            var passwordMatch = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
+
+            Console.WriteLine($"[LOGIN ATTEMPT] Password verification result: {passwordMatch}");
 
             if (passwordMatch)
             {
                 var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 
-                Console.WriteLine($"✅ Login success for: {user.Email}");
                 return Ok(new
                 {
                     token,
@@ -73,7 +72,6 @@ namespace BuddyMatch.API.Controllers
                 });
             }
 
-            Console.WriteLine("❌ Password hash mismatch.");
             return Unauthorized(new { message = "Invalid email or password" });
         }
 
