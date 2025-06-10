@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BuddyMatch.Model")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ca3b3d6ac561575c134c2e703734b675fbb608f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b096b02f08fa3618503d27b9c9c41242ddb94cea")]
 [assembly: System.Reflection.AssemblyProductAttribute("BuddyMatch.Model")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BuddyMatch.Model")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
