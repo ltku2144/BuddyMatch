@@ -46,12 +46,19 @@ builder.Services.AddScoped<UserRepository>(provider =>
     return new UserRepository(config);
 });
 
+// --- Dependency Injection: UserProfileRepository ---
+builder.Services.AddScoped<UserProfileRepository>(provider =>
+{
+    var config = provider.GetRequiredService<IConfiguration>();
+    return new UserProfileRepository(config);
+});
+
 // --- Enable CORS for Angular frontend ---
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200") // Adjust to your Angular app's URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

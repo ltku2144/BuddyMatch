@@ -1,0 +1,183 @@
+--
+-- PostgreSQL database dump - 2-Table Relational Architecture
+-- BuddyMatch Application Database with Proper Relational Design
+--
+
+-- Dumped from database version 17.4 (Postgres.app)
+-- Dumped by pg_dump version 17.4 (Postgres.app)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+SET default_table_access_method = heap;
+
+-- =====================================
+-- TABLE 1: USERS (Core User Information)
+-- =====================================
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    email character varying(100) NOT NULL,
+    password character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+-- ==========================================
+-- TABLE 2: USER_PROFILES (Study Information)
+-- ==========================================
+
+CREATE TABLE public.user_profiles (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    program character varying(150),
+    interests text,
+    availability character varying(100),
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE public.user_profiles OWNER TO postgres;
+
+--
+-- Name: user_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.user_profiles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.user_profiles_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.user_profiles_id_seq OWNED BY public.user_profiles.id;
+ALTER TABLE ONLY public.user_profiles ALTER COLUMN id SET DEFAULT nextval('public.user_profiles_id_seq'::regclass);
+
+-- ====================================
+-- DATA INSERTION (Migrated from single table)
+-- ====================================
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, name, email, password, created_at) FROM stdin;
+1	Anna Jensen	anna.j@cbs.dk	Anna2024	2025-04-29 10:13:45.531582
+2	Markus Sørensen	markus.s@cbs.dk	Finance42	2025-04-29 10:13:45.531582
+3	Lea Andersen	lea.a@cbs.dk	UXrocks!	2025-04-29 10:13:45.531582
+4	Peter Nielsen	peter.n@cbs.dk	Green2025	2025-04-29 10:13:45.531582
+5	Sofia Holm	sofia.h@cbs.dk	LawGirl99	2025-04-29 10:13:45.531582
+6	Emil Kristensen	emil.k@cbs.dk	Data#AI	2025-04-29 10:13:45.531582
+7	Freja Møller	freja.m@cbs.dk	FrejaMktg	2025-04-29 10:13:45.531582
+8	Noah Rasmussen	noah.r@cbs.dk	TaxMan12	2025-04-29 10:13:45.531582
+9	Ida Thomsen	ida.t@cbs.dk	StartupQueen	2025-04-29 10:13:45.531582
+10	Lucas Lund	lucas.l@cbs.dk	LeadNow!	2025-04-29 10:13:45.531582
+\.
+
+--
+-- Data for Name: user_profiles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_profiles (id, user_id, program, interests, availability, updated_at) FROM stdin;
+1	1	Bachelor - International Business	Marketing, Case Studies	Mon-Wed 10:00–13:00	2025-04-29 10:13:45.531582
+2	2	Master - Finance and Investments	Excel, Corporate Finance	Tue & Thu 14:00–17:00	2025-04-29 10:13:45.531582
+3	3	Bachelor - Digital Management	UX Design, Startups	Mon-Fri 09:00–12:00	2025-04-29 10:13:45.531582
+4	4	Master - Public Management and Social Dev.	Debate, Sustainability	Wed & Fri 13:00–16:00	2025-04-29 10:13:45.531582
+5	5	Bachelor - Business Admin & Commercial Law	Contracts, Legal Cases	Tue & Thu 11:00–14:00	2025-04-29 10:13:45.531582
+6	6	Master - Business Analytics	Python, AI, Analytics	Mon & Wed 15:00–18:00	2025-04-29 10:13:45.531582
+7	7	Bachelor - Marketing and Communication	Branding, Social Media	Mon-Fri 10:00–13:00	2025-04-29 10:13:45.531582
+8	8	Bachelor - Accounting and Finance	Spreadsheets, Tax Law	Tue & Thu 09:00–11:00	2025-04-29 10:13:45.531582
+9	9	Master - Entrepreneurship and Innovation	Startups, Innovation	Mon-Wed 12:00–15:00	2025-04-29 10:13:45.531582
+10	10	Master - Strategic Management and Leadership	Strategy, Leadership	Fri 09:00–12:00	2025-04-29 10:13:45.531582
+\.
+
+-- ====================================
+-- SEQUENCE VALUES
+-- ====================================
+
+SELECT pg_catalog.setval('public.users_id_seq', 10, true);
+SELECT pg_catalog.setval('public.user_profiles_id_seq', 10, true);
+
+-- ====================================
+-- PRIMARY KEYS & CONSTRAINTS
+-- ====================================
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+--
+-- Name: user_profiles user_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT user_profiles_pkey PRIMARY KEY (id);
+
+--
+-- Name: user_profiles user_profiles_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT user_profiles_user_id_key UNIQUE (user_id);
+
+-- ====================================
+-- FOREIGN KEY RELATIONSHIPS
+-- ====================================
+
+--
+-- Name: user_profiles user_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT user_profiles_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+-- ====================================
+-- INDEXES FOR PERFORMANCE
+-- ====================================
+
+CREATE INDEX idx_user_profiles_user_id ON public.user_profiles(user_id);
+CREATE INDEX idx_user_profiles_program ON public.user_profiles(program);
+CREATE INDEX idx_users_email ON public.users(email);
+
+--
+-- PostgreSQL database dump complete
+--

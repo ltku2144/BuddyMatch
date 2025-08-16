@@ -10,7 +10,12 @@ namespace BuddyMatch.Model.Repositories
 {
     public class UserRepository : BaseRepository
     {
-        public UserRepository(IConfiguration configuration) : base(configuration) { }
+        private readonly UserProfileRepository _userProfileRepository;
+
+        public UserRepository(IConfiguration configuration) : base(configuration) 
+        {
+            _userProfileRepository = new UserProfileRepository(configuration);
+        }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
@@ -23,12 +28,16 @@ namespace BuddyMatch.Model.Repositories
             var users = new List<User>();
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM public.users";
+            cmd.CommandText = @"
+                SELECT u.id, u.name, u.email, u.password, u.created_at,
+                       p.id as profile_id, p.program, p.interests, p.availability, p.updated_at
+                FROM public.users u
+                LEFT JOIN public.user_profiles p ON u.id = p.user_id";
             var reader = GetData(conn, cmd);
 
             while (reader.Read())
             {
-                users.Add(ReadUser(reader));
+                users.Add(ReadUserWithProfile(reader));
             }
             return users;
         }
@@ -41,22 +50,52 @@ namespace BuddyMatch.Model.Repositories
 
         public bool InsertUser(User user)
         {
-            // user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash ?? string.Empty); // REMOVED THIS LINE
-
             using var conn = new NpgsqlConnection(ConnectionString);
-            var cmd = conn.CreateCommand();
-            cmd.CommandText = @"
-                INSERT INTO public.users (name, email, password, program, interests, availability)
-                VALUES (@name, @email, @password, @program, @interests, @availability)";
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            
+            try
+            {
+                // Insert into users table first
+                var userCmd = conn.CreateCommand();
+                userCmd.Transaction = transaction;
+                userCmd.CommandText = @"
+                    INSERT INTO public.users (name, email, password)
+                    VALUES (@name, @email, @password)
+                    RETURNING id";
 
-            cmd.Parameters.AddWithValue("@name", NpgsqlDbType.Text, user.Name ?? string.Empty);
-            cmd.Parameters.AddWithValue("@email", NpgsqlDbType.Text, user.Email ?? string.Empty);
-            cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, user.PasswordHash);
-            cmd.Parameters.AddWithValue("@program", NpgsqlDbType.Text, user.Program ?? string.Empty);
-            cmd.Parameters.AddWithValue("@interests", NpgsqlDbType.Text, user.Interests ?? string.Empty);
-            cmd.Parameters.AddWithValue("@availability", NpgsqlDbType.Text, user.Availability ?? string.Empty);
+                userCmd.Parameters.AddWithValue("@name", NpgsqlDbType.Text, user.Name ?? string.Empty);
+                userCmd.Parameters.AddWithValue("@email", NpgsqlDbType.Text, user.Email ?? string.Empty);
+                userCmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, user.PasswordHash);
 
-            return InsertData(conn, cmd);
+                var newUserId = (int)(userCmd.ExecuteScalar() ?? 0);
+                
+                if (newUserId > 0 && user.UserProfile != null)
+                {
+                    // Insert into user_profiles table
+                    var profileCmd = conn.CreateCommand();
+                    profileCmd.Transaction = transaction;
+                    profileCmd.CommandText = @"
+                        INSERT INTO public.user_profiles (user_id, program, interests, availability)
+                        VALUES (@user_id, @program, @interests, @availability)";
+
+                    profileCmd.Parameters.AddWithValue("@user_id", newUserId);
+                    profileCmd.Parameters.AddWithValue("@program", NpgsqlDbType.Text, user.UserProfile.Program ?? string.Empty);
+                    profileCmd.Parameters.AddWithValue("@interests", NpgsqlDbType.Text, user.UserProfile.Interests ?? string.Empty);
+                    profileCmd.Parameters.AddWithValue("@availability", NpgsqlDbType.Text, user.UserProfile.Availability ?? string.Empty);
+
+                    profileCmd.ExecuteNonQuery();
+                }
+                
+                transaction.Commit();
+                return newUserId > 0;
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine($"Error in InsertUser: {ex.Message}");
+                return false;
+            }
         }
 
         public List<User> GetMatchingUsers(int userId)
@@ -65,7 +104,12 @@ namespace BuddyMatch.Model.Repositories
 
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM public.users WHERE id = @id";
+            cmd.CommandText = @"
+                SELECT u.id, u.name, u.email, u.password, u.created_at,
+                       p.id as profile_id, p.program, p.interests, p.availability, p.updated_at
+                FROM public.users u
+                LEFT JOIN public.user_profiles p ON u.id = p.user_id
+                WHERE u.id = @id";
             cmd.Parameters.AddWithValue("@id", userId);
             var reader = GetData(conn, cmd);
 
@@ -78,9 +122,12 @@ namespace BuddyMatch.Model.Repositories
             using var conn2 = new NpgsqlConnection(ConnectionString);
             var cmd2 = conn2.CreateCommand();
             cmd2.CommandText = @"
-                SELECT * FROM public.users
-                WHERE id != @id
-                AND (program = @program OR interests ILIKE '%' || @interests || '%')";
+                SELECT u.id, u.name, u.email, u.password, u.created_at,
+                       p.id as profile_id, p.program, p.interests, p.availability, p.updated_at
+                FROM public.users u
+                LEFT JOIN public.user_profiles p ON u.id = p.user_id
+                WHERE u.id != @id
+                AND (p.program = @program OR p.interests ILIKE '%' || @interests || '%')";
 
             cmd2.Parameters.AddWithValue("@id", userId);
             cmd2.Parameters.AddWithValue("@program", userProgram);
@@ -89,7 +136,7 @@ namespace BuddyMatch.Model.Repositories
             var matchReader = GetData(conn2, cmd2);
             while (matchReader.Read())
             {
-                matches.Add(ReadUser(matchReader));
+                matches.Add(ReadUserWithProfile(matchReader));
             }
 
             return matches;
@@ -110,25 +157,55 @@ namespace BuddyMatch.Model.Repositories
             try
             {
                 using var conn = new NpgsqlConnection(ConnectionString);
-                var cmd = conn.CreateCommand();
-                cmd.CommandText = @"
-                    UPDATE public.users
-                    SET name = @Name,
-                        email = @Email,
-                        program = @Program,
-                        interests = @Interests,
-                        availability = @Availability
-                    WHERE id = @Id";
-
-                cmd.Parameters.AddWithValue("@Name", user.Name);
-                cmd.Parameters.AddWithValue("@Email", user.Email);
-                cmd.Parameters.AddWithValue("@Program", user.Program ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@Interests", user.Interests ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@Availability", user.Availability ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@Id", user.Id);
-
                 conn.Open();
-                return cmd.ExecuteNonQuery() > 0;
+                using var transaction = conn.BeginTransaction();
+                
+                try
+                {
+                    // Update users table
+                    var userCmd = conn.CreateCommand();
+                    userCmd.Transaction = transaction;
+                    userCmd.CommandText = @"
+                        UPDATE public.users
+                        SET name = @Name,
+                            email = @Email
+                        WHERE id = @Id";
+
+                    userCmd.Parameters.AddWithValue("@Name", user.Name);
+                    userCmd.Parameters.AddWithValue("@Email", user.Email);
+                    userCmd.Parameters.AddWithValue("@Id", user.Id);
+
+                    var userUpdated = userCmd.ExecuteNonQuery() > 0;
+                    
+                    // Update user_profiles table if profile exists
+                    if (user.UserProfile != null)
+                    {
+                        var profileCmd = conn.CreateCommand();
+                        profileCmd.Transaction = transaction;
+                        profileCmd.CommandText = @"
+                            UPDATE public.user_profiles
+                            SET program = @Program,
+                                interests = @Interests,
+                                availability = @Availability,
+                                updated_at = CURRENT_TIMESTAMP
+                            WHERE user_id = @UserId";
+
+                        profileCmd.Parameters.AddWithValue("@Program", user.UserProfile.Program ?? (object)DBNull.Value);
+                        profileCmd.Parameters.AddWithValue("@Interests", user.UserProfile.Interests ?? (object)DBNull.Value);
+                        profileCmd.Parameters.AddWithValue("@Availability", user.UserProfile.Availability ?? (object)DBNull.Value);
+                        profileCmd.Parameters.AddWithValue("@UserId", user.Id);
+
+                        profileCmd.ExecuteNonQuery();
+                    }
+                    
+                    transaction.Commit();
+                    return userUpdated;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
             catch (Exception ex)
             {
@@ -148,39 +225,65 @@ namespace BuddyMatch.Model.Repositories
         {
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM public.users WHERE email = @Email";
-            cmd.Parameters.AddWithValue("@Email", email);
-
-            conn.Open();
-            using var reader = cmd.ExecuteReader();
-            return reader.Read() ? ReadUser(reader) : null;
+            cmd.CommandText = @"
+                SELECT u.id, u.name, u.email, u.password, u.created_at,
+                       p.id as profile_id, p.program, p.interests, p.availability, p.updated_at
+                FROM public.users u
+                LEFT JOIN public.user_profiles p ON u.id = p.user_id
+                WHERE u.email = @email";
+            cmd.Parameters.AddWithValue("@email", email);
+            
+            var reader = GetData(conn, cmd);
+            if (reader.Read())
+            {
+                return ReadUserWithProfile(reader);
+            }
+            return null;
         }
 
         public User? GetUserById(int id)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM public.users WHERE id = @Id";
+            cmd.CommandText = @"
+                SELECT u.id, u.name, u.email, u.password, u.created_at,
+                       p.id as profile_id, p.program, p.interests, p.availability, p.updated_at
+                FROM public.users u
+                LEFT JOIN public.user_profiles p ON u.id = p.user_id
+                WHERE u.id = @Id";
             cmd.Parameters.AddWithValue("@Id", id);
 
             conn.Open();
             using var reader = cmd.ExecuteReader();
-            return reader.Read() ? ReadUser(reader) : null;
+            return reader.Read() ? ReadUserWithProfile(reader) : null;
         }
 
-        private User ReadUser(NpgsqlDataReader reader)
+        private User ReadUserWithProfile(NpgsqlDataReader reader)
         {
-            return new User
+            var user = new User
             {
                 Id = reader.GetInt32(reader.GetOrdinal("id")),
                 Name = reader.GetString(reader.GetOrdinal("name")),
                 Email = reader.GetString(reader.GetOrdinal("email")),
                 PasswordHash = reader.GetString(reader.GetOrdinal("password")),
-                Program = reader.GetString(reader.GetOrdinal("program")),
-                Interests = reader.GetString(reader.GetOrdinal("interests")),
-                Availability = reader.GetString(reader.GetOrdinal("availability")),
                 CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at"))
             };
+
+            // Check if profile data exists (LEFT JOIN might return null)
+            if (!reader.IsDBNull(reader.GetOrdinal("profile_id")))
+            {
+                user.UserProfile = new UserProfile
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("profile_id")),
+                    UserId = user.Id,
+                    Program = reader.GetString(reader.GetOrdinal("program")),
+                    Interests = reader.GetString(reader.GetOrdinal("interests")),
+                    Availability = reader.GetString(reader.GetOrdinal("availability")),
+                    UpdatedAt = reader.GetDateTime(reader.GetOrdinal("updated_at"))
+                };
+            }
+
+            return user;
         }
     }
 }
