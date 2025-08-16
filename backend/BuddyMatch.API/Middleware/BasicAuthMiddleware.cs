@@ -20,9 +20,11 @@ namespace BuddyMatch.API.Middleware
 
         public async Task InvokeAsync(HttpContext context, IAuthService authService)
         {
-            // Skip authentication for login route and OPTIONS requests
+            // Skip authentication for login route, OPTIONS requests, and Swagger endpoints
             if (context.Request.Path.StartsWithSegments("/api/user/login") || 
-                context.Request.Method == "OPTIONS")
+                context.Request.Method == "OPTIONS" ||
+                context.Request.Path.StartsWithSegments("/swagger") ||
+                context.Request.Path.StartsWithSegments("/favicon.ico"))
             {
                 await _next(context);
                 return;

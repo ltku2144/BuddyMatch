@@ -20,11 +20,15 @@ namespace BuddyMatch.API.Services
             
             if (user == null)
             {
+                Console.WriteLine($"[AUTH] User not found: {username}");
                 return false;
             }
                 
-            // Verify password using BCrypt
-            bool isValid = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+            // For development: Use plain text password comparison
+            // In production, this should use BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)
+            bool isValid = password == user.PasswordHash;
+            
+            Console.WriteLine($"[AUTH] Password validation for {username}: {isValid}");
             return isValid;
         }
     }

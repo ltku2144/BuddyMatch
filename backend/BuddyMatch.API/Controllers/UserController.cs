@@ -28,7 +28,20 @@ namespace BuddyMatch.API.Controllers
             if (user == null || string.IsNullOrWhiteSpace(user.PasswordHash))
                 return BadRequest("Missing user data or password");
 
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
+            // For development: Use plain text password (no BCrypt)
+            // In production, this should use: user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
+            
+            // Ensure UserProfile exists so the profile gets created in the database
+            if (user.UserProfile == null)
+            {
+                user.UserProfile = new UserProfile
+                {
+                    Program = "",
+                    Interests = "",
+                    Availability = ""
+                };
+            }
+
             var success = _repository.InsertUser(user);
             return success ? Ok() : StatusCode(500, "User creation failed");
         }
