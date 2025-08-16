@@ -23,26 +23,41 @@ namespace BuddyMatch.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] CreateUserRequest request)
         {
-            if (user == null || string.IsNullOrWhiteSpace(user.PasswordHash))
+            // Add detailed logging to debug the issue
+            Console.WriteLine($"[CREATE USER] Received request data:");
+            Console.WriteLine($"  Name: [{request?.Name}]");
+            Console.WriteLine($"  Email: [{request?.Email}]");
+            Console.WriteLine($"  PasswordHash: [{request?.PasswordHash}]");
+            Console.WriteLine($"  Program: [{request?.Program}]");
+            Console.WriteLine($"  Interests: [{request?.Interests}]");
+            Console.WriteLine($"  Availability: [{request?.Availability}]");
+
+            if (request == null || string.IsNullOrWhiteSpace(request.PasswordHash))
                 return BadRequest("Missing user data or password");
 
-            // For development: Use plain text password (no BCrypt)
-            // In production, this should use: user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
-            
-            // Ensure UserProfile exists so the profile gets created in the database
-            if (user.UserProfile == null)
+            // Create User object with UserProfile
+            var user = new User
             {
-                user.UserProfile = new UserProfile
+                Name = request.Name,
+                Email = request.Email,
+                PasswordHash = request.PasswordHash, // Plain text for development
+                UserProfile = new UserProfile
                 {
-                    Program = "",
-                    Interests = "",
-                    Availability = ""
-                };
-            }
+                    Program = request.Program ?? "",
+                    Interests = request.Interests ?? "",
+                    Availability = request.Availability ?? ""
+                }
+            };
+
+            Console.WriteLine($"[CREATE USER] Created user object with profile:");
+            Console.WriteLine($"  UserProfile.Program: [{user.UserProfile.Program}]");
+            Console.WriteLine($"  UserProfile.Interests: [{user.UserProfile.Interests}]");
+            Console.WriteLine($"  UserProfile.Availability: [{user.UserProfile.Availability}]");
 
             var success = _repository.InsertUser(user);
+            Console.WriteLine($"[CREATE USER] Insert result: {success}");
             return success ? Ok() : StatusCode(500, "User creation failed");
         }
 
