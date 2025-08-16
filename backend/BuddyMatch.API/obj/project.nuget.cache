@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kn4VUqA6j7E=",
+  "dgSpecHash": "ZGK6w54fcKE=",
   "success": true,
-  "projectFilePath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.API/BuddyMatch.API.csproj",
+  "projectFilePath": "/Users/alejandrotoro/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documentos /Programacion trabajo/Buddie-Match/backend/BuddyMatch.API/BuddyMatch.API.csproj",
   "expectedPackageFiles": [
     "/Users/alejandrotoro/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/alejandrotoro/.nuget/packages/dapper/2.1.35/dapper.2.1.35.nupkg.sha512",

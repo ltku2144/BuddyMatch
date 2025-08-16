@@ -501,11 +501,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+      "projectUniqueName": "/Users/alejandrotoro/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documentos /Programacion trabajo/Buddie-Match/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
       "projectName": "BuddyMatch.Model",
-      "projectPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
+      "projectPath": "/Users/alejandrotoro/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documentos /Programacion trabajo/Buddie-Match/backend/BuddyMatch.Model/BuddyMatch.Model.csproj",
       "packagesPath": "/Users/alejandrotoro/.nuget/packages/",
-      "outputPath": "/Users/alejandrotoro/Documents/GitHub/BuddyMatch/backend/BuddyMatch.Model/obj/",
+      "outputPath": "/Users/alejandrotoro/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documentos /Programacion trabajo/Buddie-Match/backend/BuddyMatch.Model/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/alejandrotoro/.nuget/NuGet/NuGet.Config"
